@@ -2,9 +2,11 @@ package com.angello.springrestclientexamples.services;
 
 import com.angello.api.domain.User;
 import com.angello.api.domain.UserData;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -17,9 +19,11 @@ import java.util.List;
 public class ApiServiceImpl implements  ApiService {
 
     private RestTemplate restTemplate;
+    private final String api_url;
 
-    public ApiServiceImpl(RestTemplate restTemplate) {
+    public ApiServiceImpl(RestTemplate restTemplate, @Value("${api.url}") String api_url) {
         this.restTemplate = restTemplate;
+        this.api_url = api_url;
     }
 
     @Override
@@ -32,7 +36,11 @@ public class ApiServiceImpl implements  ApiService {
         factory.setProxy(proxy);
         restTemplate.setRequestFactory(factory);*/
 
-        UserData userData = restTemplate.getForObject("http://apifaketory.com/api/user?limit=" + limit, UserData.class);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder
+                .fromUriString(api_url)
+                .queryParam("limit", limit);
+
+        UserData userData = restTemplate.getForObject(uriBuilder.toUriString(), UserData.class);
         return userData.getData();
     }
 }
