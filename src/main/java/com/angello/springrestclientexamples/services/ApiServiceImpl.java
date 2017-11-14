@@ -26,11 +26,11 @@ public class ApiServiceImpl implements  ApiService {
     public List<User> getUsers(Integer limit) {
 
         //Connect rest template through proxy
-        SimpleClientHttpRequestFactory factory = new   SimpleClientHttpRequestFactory();
+        /*SimpleClientHttpRequestFactory factory = new   SimpleClientHttpRequestFactory();
         InetSocketAddress address = new InetSocketAddress("proxy",8080);
         Proxy proxy = new Proxy(Proxy.Type.HTTP,address);
         factory.setProxy(proxy);
-        restTemplate.setRequestFactory(factory);
+        restTemplate.setRequestFactory(factory);*/
 
         UserData userData = restTemplate.getForObject("http://apifaketory.com/api/user?limit=" + limit, UserData.class);
         return userData.getData();
