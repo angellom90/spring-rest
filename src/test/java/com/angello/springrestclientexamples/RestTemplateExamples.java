@@ -157,7 +157,6 @@ public class RestTemplateExamples {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
-
         //Java object to parse to JSON
         Map<String, Object> postMap = new HashMap<>();
         postMap.put("firstname", "Sam");
@@ -202,7 +201,7 @@ public class RestTemplateExamples {
         Proxy proxy = new Proxy(Proxy.Type.HTTP,address);
         factory.setProxy(proxy);
         restTemplate.setRequestFactory(factory);
-        
+
         //Java object to parse to JSON
         Map<String, Object> postMap = new HashMap<>();
         postMap.put("firstname", "Les");
